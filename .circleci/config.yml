@@ -70,7 +70,7 @@ executors:
       - image: amazon/aws-cli
   node-exec-env:
     docker:
-      - image: circleci/node:18.7.0
+      - image: circleci/node:14.19
   ansible-exec-env:
     docker:
       - image: python:3.7-alpine3.11
