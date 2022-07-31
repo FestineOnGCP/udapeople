@@ -60,9 +60,8 @@ commands:
   restore-backend-cache:
     description: For cache modularity
     steps:
-      - restore_cache:
-          keys:
-            - backend-modules
+      - attach_workspace:
+          at: backend/
 
 executors:
   aws-exec-env:
@@ -70,7 +69,7 @@ executors:
       - image: amazon/aws-cli
   node-exec-env:
     docker:
-      - image: circleci/node:14.19
+      - image: circleci/node:13.8.0
   ansible-exec-env:
     docker:
       - image: python:3.7-alpine3.11
@@ -127,10 +126,10 @@ jobs:
             cd backend
             npm install
             npm run build
-      - save_cache:
-          paths: 
-            - backend/node_modules
-          key: backend-modules
+      - persist_to_workspace:
+          root: backend/
+          paths:
+            - node_modules/
   test-backend:
     executor: node-exec-env
     steps:
